@@ -1,0 +1,8 @@
+{
+  "appUserDo": null,
+  "error": {
+    "errorCode": "USER_NOT_FOUND",
+    "errorMessage": "no user found with the credentials"
+  },
+  "message": null
+}
