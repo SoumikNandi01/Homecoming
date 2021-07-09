@@ -1,0 +1,14 @@
+{
+  "transportOptionsList": [
+    {
+      "date": "testDate",
+      "pickup": "testPickup",
+      "drop": "testDrop",
+      "transportMode": "BUS",
+      "vehicleNumber": 12345,
+      "pickupTime": "testPickupTime",
+      "dropTime": "testDropTime",
+      "seatsAvailable": 10
+    }
+  ]
+}

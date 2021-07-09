@@ -1,0 +1,10 @@
+{
+  "appUserDo": {
+    "username": "testUsername",
+    "password": null,
+    "name": "testName",
+    "location": "testLocation"
+  },
+  "error": null,
+  "message": "registered successfully"
+}

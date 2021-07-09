@@ -1,10 +1,10 @@
 package com.homecoming.homecoming.activity;
 
+import com.homecoming.homecoming.model.AppUserDo;
 import com.homecoming.homecoming.model.error.Error;
 import com.homecoming.homecoming.model.error.ErrorCodes;
 import com.homecoming.homecoming.model.rest.GetLoginUserResponse;
-import com.homecoming.homecoming.userdatacontainerdao.UserDataContainerDao;
-import com.homecoming.homecoming.utils.ResponseBuilder;
+import com.homecoming.homecoming.containerdao.UserDataContainerDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.homecoming.homecoming.constants.Constants.AppUserFieldConstants.*;
+
 @Slf4j
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class GetLoginUserActivity {
     private final UserDataContainerDao userDataContainerDao;
-    private final ResponseBuilder responseBuilder;
 
     @GetMapping("/login")
     public GetLoginUserResponse getLoginUser(@RequestParam String username,
@@ -38,7 +39,11 @@ public class GetLoginUserActivity {
         }
 
         return GetLoginUserResponse.builder()
-                .appUserDo(responseBuilder.getAppUserFromDocument(userByUsername))
+                .appUserDo(AppUserDo.builder()
+                        .name(userByUsername.getString(NAME))
+                        .username(userByUsername.getString(USERNAME))
+                        .location(userByUsername.getString(LOCATION))
+                        .build())
                 .message("welcome user")
                 .build();
     }
