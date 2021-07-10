@@ -1,10 +1,9 @@
 package com.homecoming.homecoming.activity;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homecoming.homecoming.containerdao.TransportDataContainerDao;
 import com.homecoming.homecoming.model.TransportMode;
 import com.homecoming.homecoming.model.TransportRequestDo;
-import com.homecoming.homecoming.model.rest.GetLoginUserResponse;
 import com.homecoming.homecoming.model.rest.GetTransportOptionsResponse;
 import com.homecoming.homecoming.utils.JsonReader;
 import com.homecoming.homecoming.validators.activity.GetTravelOptionsValidator;
@@ -19,8 +18,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.*;
-import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.*;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_DATE;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_DROP;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_DROP_TIME;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_PICKUP;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_PICKUP_TIME;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_SEATS_AVAILABLE;
+import static com.homecoming.homecoming.TestConstants.TransportDocumentConstants.TEST_VEHICLE_NUMBER;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.DATE;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.DROP_LOCATION;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.DROP_TIME;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.PICKUP_LOCATION;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.PICKUP_TIME;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.SEATS_AVAILABLE;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.TRANSPORT_MODE;
+import static com.homecoming.homecoming.constants.Constants.TransportRequestFieldConstants.VEHICLE_NUMBER;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -33,12 +45,12 @@ public class GetTravelOptionsActivityTest extends AbstractTest {
 
     private JsonReader jsonReader;
     private String testDirectory;
-    private Gson gson;
+    private ObjectMapper objectMapper;
     private GetTravelOptionsValidator getTravelOptionsValidator;
 
     @BeforeEach
     public void startup() {
-        gson = new Gson();
+        objectMapper = new ObjectMapper();
         jsonReader = new JsonReader();
         testDirectory = "gettraveloptions/";
         getTravelOptionsValidator = new GetTravelOptionsValidator();
@@ -81,7 +93,7 @@ public class GetTravelOptionsActivityTest extends AbstractTest {
     }
 
     private GetTransportOptionsResponse getTransportOptionsResponse(String fileName) throws IOException {
-        return gson.fromJson(jsonReader.getJsonReaderFromFile(
+        return objectMapper.readValue(jsonReader.getJsonReaderFromFile(
                 baseDirectory + testDirectory + fileName), GetTransportOptionsResponse.class);
     }
 }

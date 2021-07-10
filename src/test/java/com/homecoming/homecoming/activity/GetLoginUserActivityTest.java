@@ -1,5 +1,6 @@
 package com.homecoming.homecoming.activity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.homecoming.homecoming.model.rest.GetLoginUserResponse;
 import com.homecoming.homecoming.containerdao.UserDataContainerDao;
@@ -31,12 +32,12 @@ public class GetLoginUserActivityTest extends AbstractTest {
 
     private JsonReader jsonReader;
     private String testDirectory;
-    private Gson gson;
+    private ObjectMapper objectMapper;
     private GetLoginUserValidator getLoginUserValidator;
 
     @BeforeEach
     public void startup() {
-        gson = new Gson();
+        objectMapper = new ObjectMapper();
         jsonReader = new JsonReader();
         testDirectory = "getloginuser/";
         getLoginUserValidator = new GetLoginUserValidator(new ErrorValidator(),
@@ -74,7 +75,7 @@ public class GetLoginUserActivityTest extends AbstractTest {
     }
 
     private GetLoginUserResponse getLoginUserResponse(String fileName) throws IOException {
-        return gson.fromJson(jsonReader.getJsonReaderFromFile(
+        return objectMapper.readValue(jsonReader.getJsonReaderFromFile(
                 baseDirectory + testDirectory + fileName), GetLoginUserResponse.class);
     }
 }

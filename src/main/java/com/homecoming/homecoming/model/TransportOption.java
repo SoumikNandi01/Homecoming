@@ -1,10 +1,12 @@
 package com.homecoming.homecoming.model;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
+@AllArgsConstructor
 @Getter
+@NoArgsConstructor
+@Setter
 public class TransportOption {
     private String date;
     private String pickupLocation;
